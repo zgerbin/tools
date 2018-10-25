@@ -175,8 +175,4 @@ public class HttpUtils {
                 requestBase.setHeader("User-Agent", header.getUserAgent());
         }
     }
-
-    public static void main(String[] args) {
-        post("http://test-kxc.ruixiude.com:20075/cloudclass/api/video/plays");
-    }
 }
