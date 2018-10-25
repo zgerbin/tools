@@ -4,7 +4,9 @@ import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * @author zgb
@@ -15,6 +17,11 @@ public class ZipUtils {
     private static final String ENCODING = "UTF-8";
 
     private static final Integer BUFFER = 2048;
+
+
+    private ZipUtils() {
+
+    }
 
     /**
      * 将所选文件进行压缩（包含文件、文件夹等）
@@ -61,6 +68,18 @@ public class ZipUtils {
         return compressing(paths, zipName, dstPath, null);
     }
 
+    public static boolean compress(String path, String zipName, String dstPath) {
+        List<String> paths = new ArrayList<>();
+        paths.add(path);
+        return compressing(paths, zipName, dstPath, null);
+    }
+
+    public static boolean compress(String path, String zipName, String dstPath, String charset) {
+        List<String> paths = new ArrayList<>();
+        paths.add(path);
+        return compressing(paths, zipName, dstPath, charset);
+    }
+
 
     private static boolean compressFile(File file, ZipOutputStream out, String dstPath) {
         byte[] buffer = new byte[BUFFER];
@@ -86,7 +105,7 @@ public class ZipUtils {
             return false;
         }
         File[] files = dir.listFiles();
-        if (files.length == 0) {
+        if (files != null && files.length == 0) {
             try {
                 ZipEntry entry = new ZipEntry(dstPath + dir.getName() + File.separator);
                 out.putNextEntry(entry);
@@ -102,7 +121,7 @@ public class ZipUtils {
     }
 
     private static boolean compress(File file, ZipOutputStream out, String dstPath) {
-        if (dstPath != "" && !dstPath.endsWith(File.separator)) {
+        if (!dstPath.equals("") && !dstPath.endsWith(File.separator)) {
             dstPath = dstPath + File.separator;
         }
         if (file.isDirectory()) {
