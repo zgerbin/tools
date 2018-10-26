@@ -1,4 +1,4 @@
-package pers.zgerbin.tools.https.util;
+package pers.zgerbin.tools.https.entity;
 
 import java.io.Serializable;
 

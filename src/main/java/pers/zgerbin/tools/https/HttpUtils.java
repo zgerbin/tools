@@ -11,7 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import pers.zgerbin.tools.https.util.HeaderEntity;
+import pers.zgerbin.tools.https.entity.HeaderEntity;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
