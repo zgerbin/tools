@@ -10,6 +10,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.sun.prism.paint.Color;
 import pers.zgerbin.tools.utils.entity.QrCodeConfig;
+import sun.font.FontDesignMetrics;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,35 +28,37 @@ public class QrCodeUtils {
 
     private static int onColor;
     private static int offColor;
+    private static Font font;
 
-    public static void createSimpleQrCode(Integer qrCodeSize, String content, String savePath, String name, QrCodeConfig
+    public static void createSimpleQrCode(Integer qrCodeSize, String content, String savePath, String fileName, QrCodeConfig
             config) throws WriterException, IOException {
-        createQrCode(qrCodeSize, content, null, null, null, null, savePath, name, config);
+        createQrCode(qrCodeSize, content, null, null, null, null, savePath, fileName, config);
     }
 
     public static void createQrCodeWithLogo(Integer qrCodeSize, String content, Integer logoSize, String logoPath, String
-            savePath, String name, QrCodeConfig config) throws WriterException, IOException {
-        createQrCode(qrCodeSize, content, logoSize, logoPath, null, null, savePath, name, config);
+            savePath, String fileName, QrCodeConfig config) throws WriterException, IOException {
+        createQrCode(qrCodeSize, content, logoSize, logoPath, null, null, savePath, fileName, config);
     }
 
     public static void createQrCodeWithBottomText(Integer qrCodeSize, String content, String bottomText, Font font,
-                                                  String savePath, String name, QrCodeConfig config) throws WriterException, IOException {
-        createQrCode(qrCodeSize, content, null, null, bottomText, font, savePath, name, config);
+                                                  String savePath, String fileName, QrCodeConfig config) throws WriterException, IOException {
+        createQrCode(qrCodeSize, content, null, null, bottomText, font, savePath, fileName, config);
     }
 
     public static void createQrCode(Integer qrCodeSize, String content, Integer logoSize, String logoPath, String bottomText, Font font,
-                                    String savePath, String name, QrCodeConfig config) throws WriterException, IOException {
+                                    String savePath, String fileName, QrCodeConfig config) throws WriterException, IOException {
         Map<EncodeHintType, Object> hints = new HashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         hints.put(EncodeHintType.MARGIN, 0);
-        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q);
         onColor = Color.BLACK.getIntArgbPre();
         offColor = Color.WHITE.getIntArgbPre();
+
         if (config != null) {
             if (config.getMargin() != null)
                 hints.put(EncodeHintType.MARGIN, config.getMargin());
             if (config.getErrorCorrectionLevel() != null)
-                hints.put(EncodeHintType.MARGIN, config.getErrorCorrectionLevel());
+                hints.put(EncodeHintType.ERROR_CORRECTION, config.getErrorCorrectionLevel());
             if (config.getOnColor() != null) {
                 onColor = config.getOnColor().getIntArgbPre();
             }
@@ -88,19 +91,22 @@ public class QrCodeUtils {
 
             graph.drawImage(image, 200 * 2 / 5, 200 * 2 / 5, image.getWidth(null), image.getHeight(null), null);
             graph.dispose();
-            image.flush();
+            qrCodeWithLogo.flush();
             qrCode = qrCodeWithLogo;
         }
-        if (content != null) {
-            FontMetrics fm = sun.font.FontDesignMetrics.getMetrics(font);
-            int wordheigh = fm.getHeight();
+        if (bottomText != null) {
+            if (font == null) {
+                font = new Font("宋体", Font.BOLD, 17);
+            }
+            FontMetrics fm = FontDesignMetrics.getMetrics(font);
+            int wordheight = fm.getHeight();
             int strWidth = fm.stringWidth(bottomText);
-            int height = new Double(200 + ceil(wordheigh / 1.4)).intValue();
+            int height = new Double(200 + ceil(wordheight / 1.4)).intValue();
             //总长度减去文字长度的一半  （居中显示）
             BufferedImage qrCodeWithText = new BufferedImage(qrCodeSize, height + 2, BufferedImage.TYPE_INT_ARGB);
 
             Graphics2D graph = qrCodeWithText.createGraphics();
-            graph.setColor(java.awt.Color.white);
+            graph.setColor(new java.awt.Color(offColor));
             graph.fillRect(0, 0, qrCodeWithText.getWidth(), qrCodeWithText.getHeight());
             graph.drawImage(qrCode, 0, 0, qrCodeSize, qrCodeSize, null);
             // 画文字到新的面板
@@ -113,16 +119,27 @@ public class QrCodeUtils {
             graph.drawString(bottomText, wordStartX, wordStartY);
             graph.dispose();
             qrCodeWithText.flush();
-            Path path = FileSystems.getDefault().getPath(savePath, name);
-
-            ImageIO.write(qrCodeWithText, "png", path.toFile());
+            qrCode = qrCodeWithText;
         }
+        File file = new File(savePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        Path path = FileSystems.getDefault().getPath(savePath, fileName);
+
+        ImageIO.write(qrCode, "png", path.toFile());
 
     }
 
 
     public static void main(String[] args) throws WriterException, IOException {
-        String filePath = "D://";
+        QrCodeConfig config = new QrCodeConfig();
+        config.setOnColor(Color.BLUE);
+        config.setOffColor(Color.RED);
+        createSimpleQrCode(200, "hello world!", "C://abc", "test.png", new QrCodeConfig());
+        createQrCodeWithBottomText(200, "hello world!", "test2", null, "C://abc", "test2.png", config);
+        createQrCodeWithLogo(200, "hello world", 50, "C:\\Users\\78763\\Pictures\\Saved Pictures\\code.png", "C://abc", "test3.png", config);
+        /*String filePath = "D://";
         String fileName = "zxing.png";
         String content = "static double rint(double a)：四舍五入函数，返回与a的值最相近的整数（但是以浮点数形式存储）。   ";
         int width = 200; // 图像宽度
@@ -190,9 +207,9 @@ public class QrCodeUtils {
         textImage.flush();
         Path path = FileSystems.getDefault().getPath(filePath, fileName);
         ImageIO.write(textImage, format, path.toFile());
-       /* path = FileSystems.getDefault().getPath(filePath, fileName);
-        MatrixToImageWriter.writeToPath(bitMatrix, format, path);*/
+       *//* path = FileSystems.getDefault().getPath(filePath, fileName);
+        MatrixToImageWriter.writeToPath(bitMatrix, format, path);*//*
 
-        System.out.println("输出成功.");
+        System.out.println("输出成功.");*/
     }
 }
