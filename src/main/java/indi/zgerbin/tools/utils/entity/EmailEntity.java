@@ -1,4 +1,4 @@
-package pers.zgerbin.tools.utils.entity;
+package indi.zgerbin.tools.utils.entity;
 
 import java.util.List;
 import java.util.Map;

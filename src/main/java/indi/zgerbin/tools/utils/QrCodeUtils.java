@@ -1,4 +1,4 @@
-package pers.zgerbin.tools.utils;
+package indi.zgerbin.tools.utils;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -9,7 +9,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.sun.prism.paint.Color;
-import pers.zgerbin.tools.utils.entity.QrCodeConfig;
+import indi.zgerbin.tools.utils.entity.QrCodeConfig;
 import sun.font.FontDesignMetrics;
 
 import javax.imageio.ImageIO;
@@ -136,9 +136,10 @@ public class QrCodeUtils {
         QrCodeConfig config = new QrCodeConfig();
         config.setOnColor(Color.BLUE);
         config.setOffColor(Color.RED);
-        createSimpleQrCode(200, "hello world!", "C://abc", "test.png", new QrCodeConfig());
-        createQrCodeWithBottomText(200, "hello world!", "test2", null, "C://abc", "test2.png", config);
-        createQrCodeWithLogo(200, "hello world", 50, "C:\\Users\\78763\\Pictures\\Saved Pictures\\code.png", "C://abc", "test3.png", config);
+        createSimpleQrCode(26, "hello world!", "C://abc", "test.png", new QrCodeConfig());
+        //createQrCodeWithBottomText(200, "hello world!", "test2", null, "C://abc", "test2.png", config);
+        //createQrCodeWithLogo(200, "hello world", 50, "C:\\Users\\78763\\Pictures\\Saved Pictures\\code.png",
+        //"C://abc", "test3.png", config);
         /*String filePath = "D://";
         String fileName = "zxing.png";
         String content = "static double rint(double a)：四舍五入函数，返回与a的值最相近的整数（但是以浮点数形式存储）。   ";

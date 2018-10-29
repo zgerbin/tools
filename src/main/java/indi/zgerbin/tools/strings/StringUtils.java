@@ -1,4 +1,4 @@
-package pers.zgerbin.tools.strings;
+package indi.zgerbin.tools.strings;
 
 
 public class StringUtils {

@@ -1,7 +1,7 @@
-package pers.zgerbin.tools.utils;
+package indi.zgerbin.tools.utils;
 
-import pers.zgerbin.tools.utils.entity.EmailConfig;
-import pers.zgerbin.tools.utils.entity.EmailEntity;
+import indi.zgerbin.tools.utils.entity.EmailConfig;
+import indi.zgerbin.tools.utils.entity.EmailEntity;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;

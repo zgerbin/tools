@@ -1,5 +1,6 @@
-package pers.zgerbin.tools.https;
+package indi.zgerbin.tools.https;
 
+import indi.zgerbin.tools.https.entity.HeaderEntity;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -11,7 +12,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import pers.zgerbin.tools.https.entity.HeaderEntity;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

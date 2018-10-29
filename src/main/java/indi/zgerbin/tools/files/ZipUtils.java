@@ -1,4 +1,4 @@
-package pers.zgerbin.tools.files;
+package indi.zgerbin.tools.files;
 
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;

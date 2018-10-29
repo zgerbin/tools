@@ -1,6 +1,6 @@
-import pers.zgerbin.tools.utils.EmailUtils;
-import pers.zgerbin.tools.utils.entity.EmailConfig;
-import pers.zgerbin.tools.utils.entity.EmailEntity;
+import indi.zgerbin.tools.utils.EmailUtils;
+import indi.zgerbin.tools.utils.entity.EmailConfig;
+import indi.zgerbin.tools.utils.entity.EmailEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

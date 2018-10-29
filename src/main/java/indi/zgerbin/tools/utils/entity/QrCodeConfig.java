@@ -1,4 +1,4 @@
-package pers.zgerbin.tools.utils.entity;
+package indi.zgerbin.tools.utils.entity;
 
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.sun.prism.paint.Color;
