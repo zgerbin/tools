@@ -24,10 +24,6 @@ import static java.lang.Math.ceil;
 
 public class QrCodeUtils {
 
-    private static int onColor;
-    private static int offColor;
-    private static Font font;
-
     public static BufferedImage createSimpleQrCode(Integer qrCodeSize, String content, QrCodeConfig config) throws WriterException, IOException {
         return createQrCode(qrCodeSize, content, null, null, null, null, config);
     }
@@ -45,8 +41,8 @@ public class QrCodeUtils {
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         hints.put(EncodeHintType.MARGIN, 0);
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q);
-        onColor = Color.BLACK.getIntArgbPre();
-        offColor = Color.WHITE.getIntArgbPre();
+        int onColor = Color.BLACK.getIntArgbPre();
+        int offColor = Color.WHITE.getIntArgbPre();
 
         if (config != null) {
             if (config.getMargin() != null)
@@ -92,9 +88,9 @@ public class QrCodeUtils {
                 font = new Font("宋体", Font.BOLD, 17);
             }
             FontMetrics fm = FontDesignMetrics.getMetrics(font);
-            int wordheight = fm.getHeight();
+            int wordHeight = fm.getHeight();
             int strWidth = fm.stringWidth(bottomText);
-            int height = new Double(qrCodeSize + ceil(wordheight / 1.4)).intValue();
+            int height = new Double(qrCodeSize + ceil(wordHeight / 1.4)).intValue();
             //总长度减去文字长度的一半  （居中显示）
             BufferedImage qrCodeWithText = new BufferedImage(qrCodeSize, height + 2, BufferedImage.TYPE_INT_ARGB);
 
